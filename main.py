@@ -4,14 +4,15 @@ from config import BOT_TOKEN
 bot = telebot.TeleBot(BOT_TOKEN)
 
 # Handle '/start' and '/help'
-@bot.message_handler(commands=['help', 'start'])
+@bot.message_handler(commands=['start'])
 def send_welcome(message):
     markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
     markup.row('📅 View Schedule', '🏫 About School', '❓ Help')
     bot.reply_to(message, """
-👋 Hello! Welcome to our Online School Bot.
-Here you can check your lesson schedule, learn more about the school, or get help.
-Choose an option below 👇
+👋 Привет! Добро пожаловать в наш бот онлайн-школы.
+Здесь вы можете просматривать своё расписание, узнавать информацию о школе или получать помощь.
+                 
+Выберите опцию ниже 👇
 """, reply_markup=markup)
 
 
@@ -19,36 +20,36 @@ Choose an option below 👇
 @bot.message_handler(func=lambda message: True)
 def handle_buttons(message):
     if message.text == "📅 View Schedule":
-        bot.send_message(message.chat.id,
-"""🧮 Monday: Math - 10:00 AM
-🧬 Tuesday: Biology - 11:00 AM
-💻 Wednesday: Computer Science - 12:00 PM
-📖 Thursday: Literature - 10:30 AM
-🌍 Friday: Geography - 11:00 AM""")
+        bot.send_message(message.chat.id,"""📅 Ваше расписание:
+
+🧮 Понедельник: Математика - 10:00
+🧬 Вторник: Биология - 11:00
+💻 Среда: Информатика - 12:00
+📖 Четверг: Литература - 10:30
+🌍 Пятница: География - 11:00""")
         
 
     elif message.text == "🏫 About School":
-        bot.send_message(message.chat.id, """🎓 About Our School:
+        bot.send_message(message.chat.id, """🎓 О нашей школе:
 
-We are an online school dedicated to providing high-quality education to students worldwide.  
-Our goal is to make learning fun, interactive, and accessible from anywhere 🌍  
+Мы — онлайн-школа, предоставляющая качественное образование студентам со всего мира.  
+Наша цель — сделать обучение увлекательным, интерактивным и доступным из любой точки 🌍  
 
-You can always check your schedule or get help using this bot!""")
+Вы всегда можете проверить своё расписание или получить помощь через этого бота!""")
         
 
     elif message.text == "❓ Help":
-        bot.send_message(message.chat.id, """💬 Help Section:
+        bot.send_message(message.chat.id, """💬 Раздел помощи:
 
-                         
-Here’s how to use this bot:
-- Press 📅 View Schedule to see your weekly lessons.
-- Press 🏫 About School to learn more about the school.
-- Press /start anytime to return to the main menu.
+Как пользоваться ботом:
+- Нажмите 📅 View Schedule, чтобы увидеть своё расписание.
+- Нажмите 🏫 About School, чтобы узнать информацию о школе.
+- Введите /start в любой момент, чтобы вернуться в главное меню.
 
-If something doesn’t work, try restarting the chat or contact your teacher.""")
-
+Если что-то не работает, попробуйте перезапустить чат или обратитесь к своему учителю.""")
+        
 
     else:
-        bot.send_message(message.chat.id, "⚠️ Oops! Please use the buttons or type /start to see the menu again.")
+        bot.send_message(message.chat.id, "⚠️ Ой! Пожалуйста, используйте кнопки или введите /start, чтобы увидеть меню снова.")
 
 bot.infinity_polling()
